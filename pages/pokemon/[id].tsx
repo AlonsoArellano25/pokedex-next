@@ -118,7 +118,11 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
     paths: pokemons151.map((id) => ({
       params: { id }
     })),
-    fallback: false
+    //Si el fallback esta en false permite que valide solo la data que tiene next, en este caso 151 pokemones
+    //fallback: false
+
+    //Si esta en blocking no existe validacion, intenta buscar todas las alternativas
+    fallback: "blocking"
   };
 };
 
@@ -133,7 +137,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
       pokemon: data
-    }
+    },
+    //Regenera cada segundo que se coloca abajo, es Static regeneration
+    revalidate: 85400
   };
 };
 
